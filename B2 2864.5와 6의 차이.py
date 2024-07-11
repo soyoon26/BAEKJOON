@@ -1,28 +1,30 @@
-A,B=input().split()
-five=[]
-six=[]
-for i in range(len(A)):
-    if A[i] == '5':
-       five.append(len(A)-i-1)
-    elif A[i] == '6':
-        six.append(len(A)-i-1)
-for j in range(len(B)):
-    if B[j] == '5':
-        five.append(len(B)-j-1)
-    elif B[j] == '6':
-        six.append(len(B)-j-1)
-ans=int(A)+int(B)
-min,max=0,0
-if len(five) > 0:
-    for k in range(len(five)):
-        max+=10**(five[k])
-if len(six) > 0:
-    for m in range(len(six)):
-        min+=10**(six[m])
-print(ans-min,ans+max)
+import sys
+a, b = sys.stdin.readline().split()
+nums = []
 
+def change(num,cnum,x):
+    ans = ""
+    for i in x:
+        if i == num:
+            ans+= cnum
+        else:
+            ans+=i
+    nums.append(int(ans))
 
-#빠른 방법, replace 사용
-a,b=input().split()
-print(int(a.replace('6','5'))+int(b.replace('6','5')), end=' ')
-print(int(a.replace('5','6'))+int(b.replace('5','6')))
+change("5","6",a)
+change("6","5",a)
+renums = nums.copy()
+renums.sort()
+nums=[]
+change("5","6",b)
+change("6","5",b)
+nums.sort()
+
+print(renums[0]+nums[0],renums[-1]+nums[-1])
+
+# 며칠 안 풀었다고 replace를 까먹고 있었음..
+A, B = input().split()
+
+min_num = int(A.replace('6', '5')) + int(B.replace('6', '5'))
+max_num = int(A.replace('5', '6')) + int(B.replace('5', '6'))
+print(min_num, max_num)
